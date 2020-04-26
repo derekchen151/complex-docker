@@ -1,0 +1,20 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t derek158/angular-test -f ./ui/Dockerfile.dev ./ui
+
+scirpts:
+    - docker run derek158/angular-test npm test -- --coverage
+
+after-success:
+    - docker build -t derek158/multi-ui -f ./ui
+    - docker build -t derek158/multi-server -f ./server
+    - docker build -t derek158/multi-worker -f ./worker
+    - docker build -t derek158/multi-nginx -f ./nginx
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push derek158/multi-ui
+    - docker push derek158/multi-server
+    - docker push derek158/multi-worker
+    - docker push derek158/multi-nginx
