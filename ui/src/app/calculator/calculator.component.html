@@ -1,0 +1,26 @@
+<form #fibForm="ngForm" (submit)="onSubmit()">
+
+    <div class="container" style="width: 600px;">
+        Fib Calculator
+
+        <div>
+            <label for="index">Enter your index: </label>
+            <input type="number" id="index" name="index" [(ngModel)]="index" />
+            <button type="submit" class="primary">Submit</button>
+        </div>
+
+        <div>
+            <b>Indicies I have seen:</b>
+            <br>
+            {{indicies}}
+        </div>
+
+        <div>
+            <b>Calculated Values:</b>
+            <div *ngFor="let pair of calculatedPairs">
+                For index {{pair.index}} | calculated {{pair.value}}
+            </div>
+        </div>
+    </div>
+
+</form>
